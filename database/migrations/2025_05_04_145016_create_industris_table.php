@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('bidang_usaha');
             $table->text('alamat');
-            $table->integer('kontak');
+            $table->string('kontak');
             $table->string('email')->unique();
             $table->foreignId('guru_id')->constrained('gurus')->onDelete('cascade');
             $table->timestamps();

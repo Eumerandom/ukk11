@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nis')->unique();
             $table->enum('gender', ['laki-laki', 'perempuan'])->default('laki-laki');
             $table->text('alamat');
-            $table->integer('kontak');
+            $table->string('kontak');
             $table->string('email')->unique();
             $table->enum('status_pkl', ['aktif', 'tidak_aktif'])->default('tidak_aktif');
             $table->timestamps();
