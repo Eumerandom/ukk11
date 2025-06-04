@@ -1,0 +1,10 @@
+
+
+    @else
+        @livewire(\App\Filament\Widgets\IndustriTable::class)
+
+--------------------------------------------------------------------
+
+    <div class="">
+        <livewire:siswa.table-pkl></livewire:siswa.table-pkl>
+    </div>

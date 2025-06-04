@@ -1,0 +1,26 @@
+    <div>
+        <h2 class="text-2xl font-bold tracking-tight">
+            Selamat datang, {{ auth()->user()->name }}
+        </h2>
+        <p class="mt-1 text-gray-500">
+            Anda belum terdaftar PKL di industri mana pun. Segera daftarkan diri Anda untuk mendapatkan tempat PKL.
+        </p>
+    </div>
+
+        @livewire(\App\Filament\Widgets\IndustriTable::class)
+
+-----------------------------------------------------------------------------------------------------------
+
+package.json
+
+"dependencies": {
+        /*"@tailwindcss/vite": "^4.0.7",*/
+}
+
+-----------------------------------------------------------------------------------------------------------
+
+dashboard-siswa.blade.php
+
+@if($showTable)
+                @livewire(\App\Filament\Widgets\IndustriTable::class)
+            @endif
