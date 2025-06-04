@@ -122,7 +122,7 @@ class FormIndustri extends Component implements HasForms
                             '
                         ]),
                     ]),
-                    Forms\Components\TextArea::make('alamat')
+                    Forms\Components\TextInput::make('alamat')
                         ->required()
                         ->maxLength(65535)
                         ->extraInputAttributes([
