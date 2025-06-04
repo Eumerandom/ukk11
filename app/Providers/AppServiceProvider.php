@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // User::observe(UserObserver::class);
-        // Siswa::observe(SiswaObserver::class);
+        Siswa::observe(SiswaObserver::class);
         // Guru::observe(GuruObserver::class);
         PKL::observe(PKLObserver::class);
     }

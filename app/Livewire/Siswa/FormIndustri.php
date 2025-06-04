@@ -75,7 +75,7 @@ class FormIndustri extends Component implements HasForms
                         ]),
                         Forms\Components\TextInput::make('kontak')
                             ->required()
-                            ->rule('regex:/^\+62[0-9]{8,13}$/')
+                            ->rules(['regex:/^\+62[0-9]{8,13}$/'])
                             ->maxLength(15)
                         ->extraInputAttributes([
                             'class' => '

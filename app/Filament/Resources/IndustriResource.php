@@ -43,8 +43,12 @@ class IndustriResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('kontak')
                             ->required()
-                            ->rule('regex:/^\+62[0-9]{8,13}$/')
-                            ->maxLength(15),
+                            ->regex('/^\+62[0-9]{8,13}$/')
+                            ->validationMessages([
+                                'regex' => 'Nomor telepon anda tidak sesuai'
+                            ])
+                            ->maxLength(15)
+                            ->helperText('Contoh: +628123456789'),
                         Forms\Components\TextInput::make('email')
                             ->email()
                             ->required()
@@ -124,16 +128,20 @@ class IndustriResource extends Resource
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\DeleteAction::make()
+                        ->visible(fn($record) => !$record->pkls()->exists()),
                 ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
-                        // ->visible(
-                        //     fn(Collection $records) => $records
-                        //         ->every(fn($record) => !$record->pkls()->exists())
-                        // ),
+                        ->action(function (Collection $records) {
+                            // Filter records yang tidak punya relasi PKL
+                            $recordsToDelete = $records->filter(fn($record) => !$record->pkls()->exists());
+                            
+                            // Hapus records yang bisa dihapus
+                            $recordsToDelete->each->delete();
+                        }),
                 ]),
             ]);
     }

@@ -14,7 +14,22 @@ class SiswaObserver
      */
     public function created(Siswa $siswa): void
     {
-        
+        if (!User::where('email', $siswa->email)->exists()) {
+            $user = User::create([
+                'name' => $siswa->nama,
+                'email' => $siswa->email,
+                'password' => Hash::make($siswa->nis),
+                'role' => 'siswa', 
+            ]);
+
+            $siswaRole = Role::where('name', 'siswa')->first();
+            if ($siswaRole) {
+                $user->assignRole($siswaRole);
+            }
+
+            $siswa->user_id = $user->id;
+            $siswa->saveQuietly();
+        }
     }
 
     /**
@@ -22,9 +37,12 @@ class SiswaObserver
      */
     public function updated(Siswa $siswa): void
     {
-        if ($user = $siswa->user) {
+        $user = User::where('email', $siswa->getOriginal('email'))->first();
+
+        if ($user) {
             $user->name = $siswa->nama;
             $user->email = $siswa->email;
+            $user->password = Hash::make($siswa->nis);
             $user->save();
         }
     }
@@ -34,9 +52,7 @@ class SiswaObserver
      */
     public function deleted(Siswa $siswa): void
     {
-        if ($user = $siswa->user) {
-            $user->delete();
-        }
+        User::where('email', $siswa->email)->delete();
     }
 
     /**
