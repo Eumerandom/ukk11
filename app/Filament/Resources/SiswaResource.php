@@ -61,7 +61,8 @@ class SiswaResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('kontak')
                             ->required()
-                            ->maxLength(255),
+                            ->rule('regex:/^\+62[0-9]{8,13}$/')
+                            ->maxLength(15),
                     ]),
 
                     Forms\Components\Textarea::make('alamat')
@@ -162,14 +163,14 @@ class SiswaResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
-                        ->visible(
-                            fn(Collection $records) => $records
-                                ->every(
-                                    fn($record) =>
-                                    $record->status_pkl === 'tidak_aktif' &&
-                                    !$record->pkls()->exists()
-                                )
-                        )
+                        // ->visible(
+                        //     fn(Collection $records) => $records
+                        //         ->every(
+                        //             fn($record) =>
+                        //             $record->status_pkl === 'tidak_aktif' &&
+                        //             !$record->pkls()->exists()
+                        //         )
+                        // )
                 ]),
 
             ]);
